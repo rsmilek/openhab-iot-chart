@@ -73,8 +73,23 @@ export default class IotChart extends Component {
   componentDidMount() {
     console.log("Chart", "componentDidMount");
 
+    let query;
+    switch (this.props.activeIdx) {
+      case 1:
+        query =
+          "SELECT time AS t, Value AS y FROM rp_week.Temperature LIMIT 168";
+        break;
+      case 2:
+        query =
+          "SELECT time AS t, Value AS y FROM rp_month.Temperature LIMIT 180";
+        break;
+      default:
+        query =
+          "SELECT time AS t, Value AS y FROM rp_day.Temperature LIMIT 288";
+        break;
+    }
     this.influx
-      .query("SELECT time AS t, Value AS y FROM Temperature LIMIT 288")
+      .query(query)
       .then(response => {
         console.log("Chart", "response", response);
         this.setState({ influxData: response });
@@ -93,21 +108,21 @@ export default class IotChart extends Component {
 
   // Assign chart's data depending on flag
   resolveChartData() {
+    console.log("Chart", "this.state.influxData", this.state.influxData);
     switch (this.props.activeIdx) {
       case 1:
-        this.data.datasets[0].data = DATA_WEEK.series;
+        this.data.datasets[0].data = this.state.influxData;
+        // this.data.datasets[0].data = DATA_WEEK.series;
         this.options.scales.xAxes[0] = DATA_WEEK.xAxes;
         break;
       case 2:
-        this.data.datasets[0].data = DATA_MONTH.series;
+        this.data.datasets[0].data = this.state.influxData;
+        // this.data.datasets[0].data = DATA_MONTH.series;
         this.options.scales.xAxes[0] = DATA_MONTH.xAxes;
         break;
       default:
-        console.log("Chart", "this.state.influxData", this.state.influxData);
         this.data.datasets[0].data = this.state.influxData;
-
         // this.data.datasets[0].data = DATA_DAY.series;
-
         this.options.scales.xAxes[0] = DATA_DAY.xAxes;
         break;
     }
