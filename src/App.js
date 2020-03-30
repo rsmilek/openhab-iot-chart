@@ -25,7 +25,10 @@ export default class App extends Component {
           intervals={this.state.intervals}
           onClick={this.handleInterval}
         />
-        <IotChart activeIdx={this.state.activeIdx} />
+        <IotChart
+          activeIdx={this.state.activeIdx}
+          intervals={this.state.intervals}
+        />
       </div>
     );
   }

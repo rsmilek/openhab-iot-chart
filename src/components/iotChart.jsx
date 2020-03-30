@@ -52,6 +52,8 @@ export default class IotChart extends Component {
 
   xAxesData = [DATA_DAY.xAxes, DATA_MONTH.xAxes, DATA_WEEK.xAxes];
 
+  responses = [];
+
   constructor(props) {
     console.log("Chart", "constructor");
     super(props);
@@ -80,13 +82,18 @@ export default class IotChart extends Component {
 
   componentDidMount() {
     console.log("Chart", "componentDidMount");
-    this.influx
-      .query(this.sqlQueries[this.props.activeIdx])
-      .then(response => {
-        console.log("Chart", "response", response);
-        this.setState({ influxData: response });
-      })
-      .catch(error => console.log(error));
+
+    const { intervals } = this.props;
+    for (let i = 0; i < intervals.length; i++) {
+      this.influx
+        .query(this.sqlQueries[i])
+        .then(response => {
+          console.log("Chart", "response", response);
+          this.responses[i] = response;
+        })
+        .catch(error => console.log(error));
+    }
+    this.setState({ influxData: {} }); // JUST FOR UPDATE/RENDER
 
     // We get context trough current attribute of reference to React component
     this.ctx = this.chartRef.current.getContext("2d");
@@ -100,9 +107,9 @@ export default class IotChart extends Component {
 
   // Assign chart's data depending on flag
   resolveChartData() {
-    console.log("Chart", "this.state.influxData", this.state.influxData);
-    this.data.datasets[0].data = this.state.influxData;
-    this.options.scales.xAxes[0] = this.xAxesData[this.props.activeIdx];
+    const { activeIdx } = this.props;
+    this.data.datasets[0].data = this.responses[activeIdx];
+    this.options.scales.xAxes[0] = this.xAxesData[activeIdx];
   }
 
   createChart() {
