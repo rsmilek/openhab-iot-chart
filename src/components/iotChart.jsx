@@ -107,9 +107,9 @@ export default class IotChart extends Component {
 
   // Assign chart's data depending on flag
   resolveChartData() {
-    const { activeIdx } = this.props;
-    this.data.datasets[0].data = this.responses[activeIdx];
-    this.options.scales.xAxes[0] = this.xAxesData[activeIdx];
+    const { intervalIdx } = this.props;
+    this.data.datasets[0].data = this.responses[intervalIdx];
+    this.options.scales.xAxes[0] = this.xAxesData[intervalIdx];
   }
 
   createChart() {
@@ -128,7 +128,7 @@ export default class IotChart extends Component {
   }
 
   render() {
-    console.log("Chart", "render", "activeIdx", this.props.activeIdx);
+    console.log("Chart", "render", "intervalIdx", this.props.intervalIdx);
     return (
       <React.Fragment>
         <div>

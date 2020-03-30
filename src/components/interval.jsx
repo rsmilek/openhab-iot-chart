@@ -27,7 +27,7 @@ export default class Interval extends Component {
   getPageItemClasses(id) {
     const idx = this.props.intervals.indexOf(id);
     let classes = "page-item";
-    if (idx === this.props.activeIdx) classes += " active";
+    if (idx === this.props.intervalIdx) classes += " active";
     return classes;
   }
 }
