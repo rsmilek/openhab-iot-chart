@@ -1,0 +1,41 @@
+// Use IntelliSense to learn about possible attributes.
+// Hover to view descriptions of existing attributes.
+// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome - WSL",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "trace": true,
+      // "trace": "verbose", // Writes log directly to DEBUG CONSOLE
+      // "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        // "/mnt/c/Projects/JavaScript/r-iot-chart/*": "${workspaceFolder}/*"
+        "${workspaceFolder}/*": "${workspaceFolder}/*"
+      }
+    },
+    {
+      // Prepare:
+      // 1. "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir=%temp%\chrome-debug
+      // 2. Navigate to url = http://localhost:3000/
+      // 3. Start debugging by F5
+      // 4. Finish debugging by close Chrome
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Chrome - WSL",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}",
+      "url": "http://localhost:3000/",
+      "trace": true,
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        // "/mnt/c/Projects/JavaScript/r-iot-chart/*": "${workspaceFolder}/*"
+        "${workspaceFolder}/*": "${workspaceFolder}/*"
+      }
+    }
+  ]
+}
