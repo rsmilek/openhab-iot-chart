@@ -45,7 +45,7 @@ export default class IotChart extends Component {
   influx = {};
 
   constructor(props) {
-    console.log("constructor", "Chart");
+    console.log("Chart", "constructor");
     super(props);
     // Create refs to React components using the React.createRef API, which will give us access to the instance methods of such component.
     // NOTE: The actual reference is stored in the current attribute of the ref.
@@ -71,22 +71,13 @@ export default class IotChart extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount", "Chart");
+    console.log("Chart", "componentDidMount");
 
     this.influx
       .query("SELECT time AS t, Value AS y FROM Temperature LIMIT 288")
       .then(response => {
-        console.log("response", response);
-
-        // const influxData = { ...this.data };
-        // console.log("influxData", influxData);
-        // influxData.datasets[0].data = { ...response };
-        // // console.log("tempData.datasets[0].data", tempData.datasets[0].data);
-        // console.log("influxData", influxData);
-        // this.setState({ influxData: { influxData } });
-        // console.log("influxData", this.state.influxData);
-
-        this.setState({influxData: response});
+        console.log("Chart", "response", response);
+        this.setState({ influxData: response });
       })
       .catch(error => console.log(error));
 
@@ -96,7 +87,7 @@ export default class IotChart extends Component {
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate", "Chart");
+    console.log("Chart", "componentDidUpdate");
     this.createChart();
   }
 
@@ -112,8 +103,8 @@ export default class IotChart extends Component {
         this.options.scales.xAxes[0] = DATA_MONTH.xAxes;
         break;
       default:
+        console.log("Chart", "this.state.influxData", this.state.influxData);
         this.data.datasets[0].data = this.state.influxData;
-        console.log("---", this.state.influxData);
 
         // this.data.datasets[0].data = DATA_DAY.series;
 
@@ -123,10 +114,7 @@ export default class IotChart extends Component {
   }
 
   createChart() {
-    console.log("createChart", "Chart");
-
-    console.log("createChart", this.data);
-
+    console.log("Chart", "createChart");
     this.resolveChartData();
     // NOTE: Destroy & Create of Chart.js is the only way how to refresh chart with new data
     // Destroy existing chart if not empty & assigned
@@ -135,16 +123,13 @@ export default class IotChart extends Component {
     // Create new instance of chart
     this.myChart = new Chart(this.ctx, {
       type: "line",
-
       data: this.data,
-      //data: this.state.influxData,
-
       options: this.options
     });
   }
 
   render() {
-    console.log("render", "Chart", "activeIdx =", this.props.activeIdx);
+    console.log("Chart", "render", "activeIdx", this.props.activeIdx);
     return (
       <React.Fragment>
         <div>
