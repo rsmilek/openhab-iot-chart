@@ -44,6 +44,12 @@ export default class IotChart extends Component {
   myChart = {};
   influx = {};
 
+  sqlQueries = [
+    "SELECT time AS t, Value AS y FROM rp_day.Temperature LIMIT 288",
+    "SELECT time AS t, Value AS y FROM rp_week.Temperature LIMIT 168",
+    "SELECT time AS t, Value AS y FROM rp_month.Temperature LIMIT 180"
+  ];
+
   constructor(props) {
     console.log("Chart", "constructor");
     super(props);
@@ -66,30 +72,14 @@ export default class IotChart extends Component {
     });
 
     this.state = {
-      influxData: []
+      influxData: {}
     };
   }
 
   componentDidMount() {
     console.log("Chart", "componentDidMount");
-
-    let query;
-    switch (this.props.activeIdx) {
-      case 1:
-        query =
-          "SELECT time AS t, Value AS y FROM rp_week.Temperature LIMIT 168";
-        break;
-      case 2:
-        query =
-          "SELECT time AS t, Value AS y FROM rp_month.Temperature LIMIT 180";
-        break;
-      default:
-        query =
-          "SELECT time AS t, Value AS y FROM rp_day.Temperature LIMIT 288";
-        break;
-    }
     this.influx
-      .query(query)
+      .query(this.sqlQueries[this.props.activeIdx])
       .then(response => {
         console.log("Chart", "response", response);
         this.setState({ influxData: response });
