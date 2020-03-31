@@ -12,7 +12,7 @@ export default class Interval extends Component {
                 <a
                   className="page-link"
                   href="#"
-                  onClick={event => this.props.onClick(i, event)}
+                  onClick={event => this.handleInterval(i, event)}
                 >
                   {i}
                 </a>
@@ -23,6 +23,14 @@ export default class Interval extends Component {
       </React.Fragment>
     );
   }
+
+  handleInterval = (id, event) => {
+    event.preventDefault();
+    console.log("Interval", "handleInterval", "id", id);
+    const intervalIdx = this.props.intervals.indexOf(id);
+    console.log("Interval", "handleInterval", "intervalIdx", intervalIdx);
+    this.props.onChange(intervalIdx); // Fire event to parent component to change state
+  };
 
   getPageItemClasses(id) {
     const idx = this.props.intervals.indexOf(id);

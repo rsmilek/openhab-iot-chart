@@ -9,11 +9,7 @@ export default class App extends Component {
     intervals: ["Day", "Week", "Month"]
   };
 
-  handleInterval = (id, event) => {
-    event.preventDefault();
-    console.log("handleInterval id =", id);
-    const intervalIdx = this.state.intervals.indexOf(id);
-    console.log("handleInterval", intervalIdx);
+  handleInterval = intervalIdx => {
     this.setState({ intervalIdx });
   };
 
@@ -23,7 +19,7 @@ export default class App extends Component {
         <Interval
           intervalIdx={this.state.intervalIdx}
           intervals={this.state.intervals}
-          onClick={this.handleInterval}
+          onChange={this.handleInterval}
         />
         <IotChart
           intervalIdx={this.state.intervalIdx}
