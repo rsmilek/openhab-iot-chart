@@ -39,7 +39,7 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log("App", "componentDidMount");
-    this.fetchData(this.state.intervalIdx);
+    this.fetchData(this.state.intervalIdx); // Serves to get data for first run
   }
 
   componentDidUpdate() {
