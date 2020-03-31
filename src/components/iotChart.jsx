@@ -3,7 +3,6 @@ import Chart from "chart.js";
 import { DATA_DAY } from "../data/seriesDay";
 import { DATA_WEEK } from "../data/seriesWeek";
 import { DATA_MONTH } from "../data/seriesMonth";
-const Influx = require("influx");
 
 export default class IotChart extends Component {
   data = {
@@ -46,21 +45,8 @@ export default class IotChart extends Component {
     // Create refs to React components using the React.createRef API, which will give us access to the instance methods of such component.
     // NOTE: The actual reference is stored in the current attribute of the ref.
     this.chartRef = React.createRef();
-    this.influx = new Influx.InfluxDB({
-      host: "192.168.0.10",
-      username: "admin",
-      password: "Kolovrat73",
-      database: "openweather_db",
-      schema: [
-        {
-          measurement: "Temperature",
-          fields: { y: Influx.FieldType.FLOAT },
-          tags: []
-        }
-      ]
-    });
     this.state = {
-      temperatureData: {}
+      temperatureData: []
     };
     this.myChart = {};
     this.xAxesData = [DATA_DAY.xAxes, DATA_WEEK.xAxes, DATA_MONTH.xAxes];
