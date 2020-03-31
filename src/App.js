@@ -12,7 +12,7 @@ export default class App extends Component {
     this.state = {
       intervalIdx: 0,
       intervals: ["Day", "Week", "Month"],
-      response: {}
+      response: []
     };
 
     this.sqlQueries = [
@@ -46,20 +46,20 @@ export default class App extends Component {
   }
 
   fetchData = i => {
-    console.log("fetchData");
+    console.log("App", "fetchData");
     this.influx
       .query(this.sqlQueries[i])
       .then(response => {
-        console.log("App", "response", response);
+        console.log("App", "fetchData", "response", response);
         this.setState({ response }); // Force update IotChart component
       })
       .catch(error => console.log(error));
-    console.log("fetchData", "done");
+    console.log("App", "fetchData", "done");
   };
 
   handleIntervalChange = intervalIdx => {
-    this.fetchData(intervalIdx);
     this.setState({ intervalIdx });
+    this.fetchData(intervalIdx);
   };
 
   render() {

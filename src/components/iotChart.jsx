@@ -40,21 +40,12 @@ export default class IotChart extends Component {
     }
   };
 
-  ctx = {};
-  myChart = {};
-  influx = {};
-
-  xAxesData = [DATA_DAY.xAxes, DATA_MONTH.xAxes, DATA_WEEK.xAxes];
-
-  responses = [];
-
   constructor(props) {
     console.log("Chart", "constructor");
     super(props);
     // Create refs to React components using the React.createRef API, which will give us access to the instance methods of such component.
     // NOTE: The actual reference is stored in the current attribute of the ref.
     this.chartRef = React.createRef();
-
     this.influx = new Influx.InfluxDB({
       host: "192.168.0.10",
       username: "admin",
@@ -68,14 +59,16 @@ export default class IotChart extends Component {
         }
       ]
     });
-
     this.state = {
-      influxData: {}
+      temperatureData: {}
     };
+    this.myChart = {};
+    this.xAxesData = [DATA_DAY.xAxes, DATA_WEEK.xAxes, DATA_MONTH.xAxes];
+    this.responses = [];
   }
 
   static getDerivedStateFromProps(props, state) {
-    return { influxData: props.response };
+    return { temperatureData: props.response };
   }
 
   componentDidMount() {
@@ -92,7 +85,7 @@ export default class IotChart extends Component {
 
   resolveChartData() {
     const { intervalIdx } = this.props;
-    this.data.datasets[0].data = this.state.influxData;
+    this.data.datasets[0].data = this.state.temperatureData;
     this.options.scales.xAxes[0] = this.xAxesData[intervalIdx];
   }
 
