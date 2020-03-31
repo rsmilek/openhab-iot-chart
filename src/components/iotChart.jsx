@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Chart from "chart.js";
-import { DATA_DAY } from "../data/seriesDay";
-import { DATA_WEEK } from "../data/seriesWeek";
-import { DATA_MONTH } from "../data/seriesMonth";
+import { XAXES_DAY, XAXES_WEEK, XAXES_MONTH } from "../utils";
 
 export default class IotChart extends Component {
   data = {
@@ -49,7 +47,7 @@ export default class IotChart extends Component {
       temperatureData: []
     };
     this.myChart = {};
-    this.xAxesData = [DATA_DAY.xAxes, DATA_WEEK.xAxes, DATA_MONTH.xAxes];
+    this.xAxesData = [XAXES_DAY, XAXES_WEEK, XAXES_MONTH];
     this.responses = [];
   }
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Interval from "./components/interval";
 import IotChart from "./components/iotChart";
 import "./App.css";
+import { INFLUXDB } from "./utils";
 const Influx = require("influx");
 
 export default class App extends Component {
@@ -22,10 +23,10 @@ export default class App extends Component {
     ];
 
     this.influx = new Influx.InfluxDB({
-      host: "192.168.0.10",
-      username: "admin",
-      password: "Kolovrat73",
-      database: "openweather_db",
+      host: INFLUXDB.host,
+      username: INFLUXDB.userName,
+      password: INFLUXDB.password,
+      database: INFLUXDB.database,
       schema: [
         {
           measurement: "Temperature",
