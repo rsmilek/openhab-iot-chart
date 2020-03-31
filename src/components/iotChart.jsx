@@ -44,12 +44,6 @@ export default class IotChart extends Component {
   myChart = {};
   influx = {};
 
-  sqlQueries = [
-    "SELECT time AS t, Value AS y FROM rp_day.Temperature LIMIT 288",
-    "SELECT time AS t, Value AS y FROM rp_week.Temperature LIMIT 168",
-    "SELECT time AS t, Value AS y FROM rp_month.Temperature LIMIT 180"
-  ];
-
   xAxesData = [DATA_DAY.xAxes, DATA_MONTH.xAxes, DATA_WEEK.xAxes];
 
   responses = [];
@@ -80,21 +74,12 @@ export default class IotChart extends Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    return { influxData: props.response };
+  }
+
   componentDidMount() {
     console.log("Chart", "componentDidMount");
-
-    const { intervals } = this.props;
-    for (let i = 0; i < intervals.length; i++) {
-      this.influx
-        .query(this.sqlQueries[i])
-        .then(response => {
-          console.log("Chart", "response", response);
-          this.responses[i] = response;
-        })
-        .catch(error => console.log(error));
-    }
-    this.setState({ influxData: {} }); // JUST FOR UPDATE/RENDER
-
     // We get context trough current attribute of reference to React component
     this.ctx = this.chartRef.current.getContext("2d");
     this.createChart();
@@ -105,10 +90,9 @@ export default class IotChart extends Component {
     this.createChart();
   }
 
-  // Assign chart's data depending on flag
   resolveChartData() {
     const { intervalIdx } = this.props;
-    this.data.datasets[0].data = this.responses[intervalIdx];
+    this.data.datasets[0].data = this.state.influxData;
     this.options.scales.xAxes[0] = this.xAxesData[intervalIdx];
   }
 
@@ -133,7 +117,7 @@ export default class IotChart extends Component {
       <React.Fragment>
         <div>
           {/* Adding component reference to chart's canvas */}
-          <canvas ref={this.chartRef} />{" "}
+          <canvas ref={this.chartRef} />
         </div>
       </React.Fragment>
     );
