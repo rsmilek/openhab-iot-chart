@@ -6,7 +6,7 @@ import "./App.css";
 export default class App extends Component {
   state = {
     intervalIdx: 0,
-    intervals: ["Day", "Month", "Year"]
+    intervals: ["Day", "Week", "Month"]
   };
 
   handleInterval = (id, event) => {
