@@ -6,7 +6,8 @@ export const XAXES_DAY = {
     displayFormats: {
       hour: "HH:mm"
     }
-  }
+  },
+  bounds: "ticks"
 };
 
 export const XAXES_WEEK = {

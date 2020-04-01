@@ -21,7 +21,8 @@ export default class IotChart extends Component {
   options = {
     responsive: true,
     scales: {
-      xAxes: []
+      xAxes: [],
+      yAxis: []
     },
     title: {
       display: true,
