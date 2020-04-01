@@ -46,10 +46,10 @@ export default class App extends Component {
     console.log("App", "componentDidMount");
   }
 
-  fetchData = i => {
+  fetchData = intervalIdx => {
     console.log("App", "fetchData");
     this.influx
-      .query(this.sqlQueries[i])
+      .query(this.sqlQueries[intervalIdx])
       .then(response => {
         console.log("App", "fetchData", "response", response);
         this.setState({ response }); // Force update IotChart component
