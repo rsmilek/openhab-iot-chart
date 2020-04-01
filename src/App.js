@@ -4,6 +4,7 @@ import IotChart from "./components/iotChart";
 import "./App.css";
 import { INFLUXDB } from "./utils";
 const Influx = require("influx");
+const moment = require("moment");
 
 export default class App extends Component {
   constructor(props) {
@@ -48,6 +49,30 @@ export default class App extends Component {
 
   fetchData = intervalIdx => {
     console.log("App", "fetchData");
+
+    ////
+    let aFrom = moment()
+      .hours(0)
+      .minutes(0)
+      .seconds(0);
+    let aTo = moment()
+      .hours(23)
+      .minutes(59)
+      .seconds(59);
+    let offset = 0;
+    aFrom.add(offset, "d");
+    aTo.add(offset, "d");
+    console.log("---", aFrom.format(), aTo.format());
+    let q =
+      "SELECT time AS t, Value AS y FROM rp_day.Temperature WHERE time >= '" +
+      aFrom.format() +
+      "'" +
+      " AND time <= '" +
+      aTo.format() +
+      "'";
+    this.sqlQueries[0] = q;
+    ////
+
     this.influx
       .query(this.sqlQueries[intervalIdx])
       .then(response => {
