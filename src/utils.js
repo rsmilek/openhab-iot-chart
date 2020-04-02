@@ -18,7 +18,8 @@ export const XAXES_WEEK = {
     displayFormats: {
       day: "DD.MM"
     }
-  }
+  },
+  bounds: "ticks"
 };
 
 export const XAXES_MONTH = {
@@ -29,7 +30,8 @@ export const XAXES_MONTH = {
     displayFormats: {
       day: "DD.MM"
     }
-  }
+  },
+  bounds: "ticks"
 };
 
 export const INFLUXDB = {
@@ -38,3 +40,7 @@ export const INFLUXDB = {
   password: "Kolovrat73",
   database: "openweather_db"
 };
+
+export const INTERVAL_IDX_DAY = 0;
+export const INTERVAL_IDX_WEEK = 1;
+export const INTERVAL_IDX_MONTH = 2;
