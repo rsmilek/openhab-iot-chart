@@ -1,3 +1,30 @@
+// Defines array interval names
+export const INTERVALS = ["Day", "Week", "Month"];
+
+// Interval index - Day
+export const INTERVAL_IDX_DAY = 0;
+// Interval index - Week
+export const INTERVAL_IDX_WEEK = 1;
+// Interval index - Month
+export const INTERVAL_IDX_MONTH = 2;
+
+// Number of days of chart's from for each interval
+export const SPAN_FROM = [0, 6, 29];
+
+// Number of days to move chart's from/to for each interval
+export const SPAN_OFFSET = [1, 7, 30];
+
+// Influx DB credentials
+export const INFLUXDB = {
+  host: "192.168.0.10",
+  userName: "admin",
+  password: "Kolovrat73",
+  database: "openweather_db"
+};
+
+// Influx measurements for each interval
+export const INFLUX_MEASUREMENTS = ["rp_day.Temperature", "rp_week.Temperature", "rp_month.Temperature"];
+
 export const XAXES_DAY = {
   type: "time",
   time: {
@@ -33,14 +60,3 @@ export const XAXES_MONTH = {
   },
   bounds: "ticks"
 };
-
-export const INFLUXDB = {
-  host: "192.168.0.10",
-  userName: "admin",
-  password: "Kolovrat73",
-  database: "openweather_db"
-};
-
-export const INTERVAL_IDX_DAY = 0;
-export const INTERVAL_IDX_WEEK = 1;
-export const INTERVAL_IDX_MONTH = 2;
