@@ -50,11 +50,10 @@ export default class IotChart extends Component {
     };
     this.myChart = {};
     this.xAxesData = [XAXES_DAY, XAXES_WEEK, XAXES_MONTH];
-    this.responses = [];
   }
 
   static getDerivedStateFromProps(props, state) {
-    return { temperatureData: props.response };
+    return { temperatureData: props.sqlResponse };
   }
 
   componentDidMount() {
@@ -80,8 +79,7 @@ export default class IotChart extends Component {
     this.resolveChartData();
     // NOTE: Destroy & Create of Chart.js is the only way how to refresh chart with new data
     // Destroy existing chart if not empty & assigned
-    if (Object.keys(this.myChart).length !== 0 && typeof this.myChart)
-      this.myChart.destroy();
+    if (Object.keys(this.myChart).length !== 0 && typeof this.myChart) this.myChart.destroy();
     // Create new instance of chart
     this.myChart = new Chart(this.ctx, {
       type: "line",
