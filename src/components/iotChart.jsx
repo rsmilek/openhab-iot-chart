@@ -27,6 +27,7 @@ export default class IotChart extends Component {
     title: {
       display: true,
       text: "Temperature",
+      position: "top",
       fontSize: 16
     },
     legend: {
