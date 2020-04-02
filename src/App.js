@@ -14,9 +14,9 @@ export default class App extends Component {
     console.log("App", "constructor");
     super(props);
     this.state = {
-      intervalIdx: INTERVAL_IDX_DAY, // Index of interval Day/Week/Month
+      intervalIdx: INTERVAL_IDX_DAY, // Index of interval - Day/Week/Month
       sqlResponse: [], // SQL response fetched from Influx DB for measurement
-      offset: 0 // Offset of chart's time min/max span for interval
+      offset: 0 // Offset of chart's time min/max (span)  for interval
     };
     this.influx = new Influx.InfluxDB({
       host: INFLUXDB.host,
