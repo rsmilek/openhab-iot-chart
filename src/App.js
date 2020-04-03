@@ -3,7 +3,8 @@ import Interval from "./components/interval";
 import IotChartSpan from "./components/IotChartSpan";
 import IotChart from "./components/iotChart";
 import "./App.css";
-import { INTERVALS, INTERVAL_IDX_DAY } from "./utils";
+import { INTERVALS, INTERVAL_IDX_DAY } from "./share";
+
 const database = require("./database");
 const chartSpan = require("./chartSpan");
 

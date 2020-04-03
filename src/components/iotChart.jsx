@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Chart from "chart.js";
-import { XAXES_DAY, XAXES_WEEK, XAXES_MONTH } from "../utils";
+import { XAXES_DAY, XAXES_WEEK, XAXES_MONTH } from "../share";
 
 export default class IotChart extends Component {
   data = {

@@ -1,3 +1,4 @@
+const share = require("./share");
 const Influx = require("influx");
 const util = require("util");
 
@@ -30,11 +31,22 @@ const fetchMeasurement = (intervalIdx, span) => {
   return influx
     .query(sqlQuery)
     .then(response => {
-      console.log("Db", "fetchMeasurement", "response", response);
-      // // this.setState({ offset: offset, sqlResponse: response }); // Force update React components
+      console.log("database", "fetchMeasurement", "response", response);
       return response;
     })
     .catch(error => console.log("Db", "fetchMeasurement", error));
 };
 
+const getMeasurementMinTime = () => {
+  return influx
+    .query("SELECT first(Value) FROM " + INFLUX_MEASUREMENTS[share.INTERVAL_IDX_DAY])
+    .then(response => {
+      const minTime = response[0].time;
+      console.log("database", "getMinTime", minTime);
+      return minTime;
+    })
+    .catch(error => console.log(error));
+};
+
 exports.fetchMeasurement = fetchMeasurement;
+exports.getMeasurementMinTime = getMeasurementMinTime;
