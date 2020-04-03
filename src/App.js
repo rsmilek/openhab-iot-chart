@@ -3,7 +3,8 @@ import Interval from "./components/interval";
 import IotChartSpan from "./components/IotChartSpan";
 import IotChart from "./components/iotChart";
 import "./App.css";
-import { INTERVALS, INTERVAL_IDX_DAY, SPAN_FROM, SPAN_OFFSET, Db } from "./utils";
+import { INTERVALS, INTERVAL_IDX_DAY, SPAN_FROM, SPAN_OFFSET } from "./utils";
+const database = require("./database");
 const moment = require("moment");
 
 export default class App extends Component {
@@ -12,10 +13,9 @@ export default class App extends Component {
     super(props);
     this.state = {
       intervalIdx: INTERVAL_IDX_DAY, // Index of interval - Day/Week/Month
-      sqlResponse: [], // SQL response fetched from Influx DB for measurement
+      sqlResponse: [], // SQL response fetched from Influx database for measurement
       offset: 0 // Offset of chart's time min/max (span)  for interval
     };
-    this.db = new Db();
   }
 
   componentDidMount() {
@@ -56,7 +56,7 @@ export default class App extends Component {
     span = this.moveSpan(span, intervalIdx, offset); // Move chart's min/max (span) about given offset
     console.log("App", "fetchData", "from", span.aFrom.format(), "to", span.aTo.format());
     // Query SQL data with given span from measurement for corresponding interval
-    this.db.fetchMeasurement(intervalIdx, span).then(response => {
+    database.fetchMeasurement(intervalIdx, span).then(response => {
       this.setState({ offset: offset, sqlResponse: response }); // Force update React components
     });
     console.log("App", "fetchData", "done");
