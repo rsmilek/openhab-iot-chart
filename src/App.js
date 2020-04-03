@@ -3,10 +3,8 @@ import Interval from "./components/interval";
 import IotChartSpan from "./components/IotChartSpan";
 import IotChart from "./components/iotChart";
 import "./App.css";
-import { INTERVALS, INTERVAL_IDX_DAY, INFLUXDB, INFLUX_MEASUREMENTS, SPAN_FROM, SPAN_OFFSET } from "./utils";
-const Influx = require("influx");
+import { INTERVALS, INTERVAL_IDX_DAY, SPAN_FROM, SPAN_OFFSET, Db } from "./utils";
 const moment = require("moment");
-const util = require("util");
 
 export default class App extends Component {
   constructor(props) {
@@ -17,12 +15,7 @@ export default class App extends Component {
       sqlResponse: [], // SQL response fetched from Influx DB for measurement
       offset: 0 // Offset of chart's time min/max (span)  for interval
     };
-    this.influx = new Influx.InfluxDB({
-      host: INFLUXDB.host,
-      username: INFLUXDB.userName,
-      password: INFLUXDB.password,
-      database: INFLUXDB.database
-    });
+    this.db = new Db();
   }
 
   componentDidMount() {
@@ -63,19 +56,9 @@ export default class App extends Component {
     span = this.moveSpan(span, intervalIdx, offset); // Move chart's min/max (span) about given offset
     console.log("App", "fetchData", "from", span.aFrom.format(), "to", span.aTo.format());
     // Query SQL data with given span from measurement for corresponding interval
-    const sqlQuery = util.format(
-      "SELECT time AS t, Value AS y FROM %s WHERE time >= '%s' AND time <= '%s'",
-      INFLUX_MEASUREMENTS[intervalIdx],
-      span.aFrom.format(),
-      span.aTo.format()
-    );
-    this.influx
-      .query(sqlQuery)
-      .then(response => {
-        console.log("App", "fetchData", "response", response);
-        this.setState({ offset: offset, sqlResponse: response }); // Force update React components
-      })
-      .catch(error => console.log(error));
+    this.db.fetchMeasurement(intervalIdx, span).then(response => {
+      this.setState({ offset: offset, sqlResponse: response }); // Force update React components
+    });
     console.log("App", "fetchData", "done");
   };
 

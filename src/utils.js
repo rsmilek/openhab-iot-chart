@@ -1,3 +1,6 @@
+const Influx = require("influx");
+const util = require("util");
+
 // Defines array interval names
 export const INTERVALS = ["Day", "Week", "Month"];
 
@@ -60,3 +63,32 @@ export const XAXES_MONTH = {
   },
   bounds: "ticks"
 };
+
+export class Db {
+  constructor() {
+    this.influx = new Influx.InfluxDB({
+      host: INFLUXDB.host,
+      username: INFLUXDB.userName,
+      password: INFLUXDB.password,
+      database: INFLUXDB.database
+    });
+  }
+
+  // Query SQL data with given span from measurement for corresponding interval
+  fetchMeasurement(intervalIdx, span) {
+    const sqlQuery = util.format(
+      "SELECT time AS t, Value AS y FROM %s WHERE time >= '%s' AND time <= '%s'",
+      INFLUX_MEASUREMENTS[intervalIdx],
+      span.aFrom.format(),
+      span.aTo.format()
+    );
+    return this.influx
+      .query(sqlQuery)
+      .then(response => {
+        console.log("Db", "fetchMeasurement", "response", response);
+        // // this.setState({ offset: offset, sqlResponse: response }); // Force update React components
+        return response;
+      })
+      .catch(error => console.log("Db", "fetchMeasurement", error));
+  }
+}
