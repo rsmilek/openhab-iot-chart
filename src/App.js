@@ -34,9 +34,8 @@ export default class App extends Component {
     console.log("App", "componentDidMount");
   }
 
-  fetchData = (intervalIdx, offset = 0) => {
-    console.log("App", "fetchData", "intervalIdx", intervalIdx, "offset", offset);
-    // Calc chart's min/max (span) for given interval
+  // Calc chart's min/max (span) for given interval
+  calcSpanInit(intervalIdx) {
     const initMoment = moment();
     const aFrom = moment(initMoment)
       .hours(0)
@@ -47,17 +46,28 @@ export default class App extends Component {
       .hours(23)
       .minutes(59)
       .seconds(59);
-    // Move chart's min/max (span) about given offset
+    return { aFrom, aTo };
+  }
+
+  // Move chart's min/max (span) about given offset
+  moveSpan(span, intervalIdx, offset) {
     const offsetDays = offset * SPAN_OFFSET[intervalIdx];
-    aFrom.add(offsetDays, "d");
-    aTo.add(offsetDays, "d");
-    console.log("App", "fetchData", "from", aFrom.format(), "to", aTo.format());
+    span.aFrom.add(offsetDays, "d");
+    span.aTo.add(offsetDays, "d");
+    return span;
+  }
+
+  fetchData = (intervalIdx, offset = 0) => {
+    console.log("App", "fetchData", "intervalIdx", intervalIdx, "offset", offset);
+    let span = this.calcSpanInit(intervalIdx); // Calc chart's min/max (span) for given interval
+    span = this.moveSpan(span, intervalIdx, offset); // Move chart's min/max (span) about given offset
+    console.log("App", "fetchData", "from", span.aFrom.format(), "to", span.aTo.format());
     // Query SQL data with given span from measurement for corresponding interval
     const sqlQuery = util.format(
       "SELECT time AS t, Value AS y FROM %s WHERE time >= '%s' AND time <= '%s'",
       INFLUX_MEASUREMENTS[intervalIdx],
-      aFrom.format(),
-      aTo.format()
+      span.aFrom.format(),
+      span.aTo.format()
     );
     this.influx
       .query(sqlQuery)
