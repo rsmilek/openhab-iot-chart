@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Interval from "./components/interval";
+import IotChartSpan from "./components/IotChartSpan";
 import IotChart from "./components/iotChart";
 import "./App.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { INTERVALS, INTERVAL_IDX_DAY, INFLUXDB, INFLUX_MEASUREMENTS, SPAN_FROM, SPAN_OFFSET } from "./utils";
 const Influx = require("influx");
 const moment = require("moment");
@@ -98,19 +97,11 @@ export default class App extends Component {
           intervalIdx={this.state.intervalIdx}
           onChange={this.handleIntervalChange}
         />
-
-        <button className="btn btn-outline-primary btn-sm" onClick={this.handleSpanPrev}>
-          <FontAwesomeIcon icon={faAngleLeft} />
-        </button>
-        <span>&nbsp;{this.state.offset}&nbsp;</span>
-        <button
-          className="btn btn-outline-primary btn-sm"
-          onClick={this.handleSpanNext}
-          // disabled
-        >
-          <FontAwesomeIcon icon={faAngleRight} />
-        </button>
-
+        <IotChartSpan
+          offset={this.state.offset}
+          onSpanPrev={this.handleSpanPrev}
+          onSpanNext={this.handleSpanNext}
+        />
         <IotChart intervalIdx={this.state.intervalIdx} sqlResponse={this.state.sqlResponse} />
       </div>
     );
