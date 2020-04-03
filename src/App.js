@@ -3,9 +3,9 @@ import Interval from "./components/interval";
 import IotChartSpan from "./components/IotChartSpan";
 import IotChart from "./components/iotChart";
 import "./App.css";
-import { INTERVALS, INTERVAL_IDX_DAY, SPAN_FROM, SPAN_OFFSET } from "./utils";
+import { INTERVALS, INTERVAL_IDX_DAY } from "./utils";
 const database = require("./database");
-const moment = require("moment");
+const chartSpan = require("./chartSpan");
 
 export default class App extends Component {
   constructor(props) {
@@ -27,33 +27,10 @@ export default class App extends Component {
     console.log("App", "componentDidMount");
   }
 
-  // Calc chart's min/max (span) for given interval
-  calcSpanInit(intervalIdx) {
-    const initMoment = moment();
-    const aFrom = moment(initMoment)
-      .hours(0)
-      .minutes(0)
-      .seconds(0);
-    aFrom.add(-SPAN_FROM[intervalIdx], "d");
-    const aTo = moment(initMoment)
-      .hours(23)
-      .minutes(59)
-      .seconds(59);
-    return { aFrom, aTo };
-  }
-
-  // Move chart's min/max (span) about given offset
-  moveSpan(span, intervalIdx, offset) {
-    const offsetDays = offset * SPAN_OFFSET[intervalIdx];
-    span.aFrom.add(offsetDays, "d");
-    span.aTo.add(offsetDays, "d");
-    return span;
-  }
-
   fetchData = (intervalIdx, offset = 0) => {
     console.log("App", "fetchData", "intervalIdx", intervalIdx, "offset", offset);
-    let span = this.calcSpanInit(intervalIdx); // Calc chart's min/max (span) for given interval
-    span = this.moveSpan(span, intervalIdx, offset); // Move chart's min/max (span) about given offset
+    let span = chartSpan.init(intervalIdx); // Calc chart's min/max (span) for given interval
+    span = chartSpan.move(span, intervalIdx, offset); // Move chart's min/max (span) about given offset
     console.log("App", "fetchData", "from", span.aFrom.format(), "to", span.aTo.format());
     // Query SQL data with given span from measurement for corresponding interval
     database.fetchMeasurement(intervalIdx, span).then(response => {

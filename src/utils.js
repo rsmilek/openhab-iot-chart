@@ -8,12 +8,6 @@ export const INTERVAL_IDX_WEEK = 1;
 // Interval index - Month
 export const INTERVAL_IDX_MONTH = 2;
 
-// Number of days of chart's from for each interval
-export const SPAN_FROM = [0, 6, 29];
-
-// Number of days to move chart's from/to for each interval
-export const SPAN_OFFSET = [1, 7, 30];
-
 export const XAXES_DAY = {
   type: "time",
   time: {
