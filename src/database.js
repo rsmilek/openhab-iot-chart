@@ -35,7 +35,7 @@ const fetchMeasurement = (intervalIdx, span) => {
       console.log("database", "fetchMeasurement", "response", response);
       return response;
     })
-    .catch(error => console.log("Db", "fetchMeasurement", error));
+    .catch(error => console.log("database", "fetchMeasurement", error));
 };
 
 const getMeasurementMinTime = () => {
@@ -43,10 +43,10 @@ const getMeasurementMinTime = () => {
     .query("SELECT first(Value) FROM " + INFLUX_MEASUREMENTS[share.INTERVAL_IDX_DAY])
     .then(response => {
       const minTime = response[0].time;
-      console.log("database", "getMinTime", minTime);
+      console.log("database", "getMeasurementMinTime", minTime);
       return minTime;
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log("database", "fetchMeasurement", error));
 };
 
 exports.fetchMeasurement = fetchMeasurement;
