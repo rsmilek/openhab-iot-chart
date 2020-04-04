@@ -13,6 +13,7 @@ const INFLUXDB = {
 // Influx measurements for each interval
 const INFLUX_MEASUREMENTS = ["rp_day.Temperature", "rp_week.Temperature", "rp_month.Temperature"];
 
+// Instance of Influx DB object for further use
 const influx = new Influx.InfluxDB({
   host: INFLUXDB.host,
   username: INFLUXDB.userName,

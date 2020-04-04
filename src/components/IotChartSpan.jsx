@@ -29,7 +29,7 @@ export default class IotChartSpan extends Component {
         <button
           className="btn btn-outline-primary btn-sm"
           onClick={this.props.onSpanPrev}
-          // disabled
+          //disabled
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
