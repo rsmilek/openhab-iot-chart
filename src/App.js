@@ -60,18 +60,8 @@ export default class App extends Component {
     this.setState({ status: STATUS_FETCH_MEASUREMENT, intervalIdx: intervalIdx, offset: 0, sqlResponse: {} });
   };
 
-  handleSpanPrev = () => {
-    let offset = this.state.offset;
-    offset--;
+  handleSpanChange = offset => {
     this.setState({ status: STATUS_FETCH_MEASUREMENT, offset: offset });
-  };
-
-  handleSpanNext = () => {
-    let offset = this.state.offset;
-    if (offset < 0) {
-      offset++;
-      this.setState({ status: STATUS_FETCH_MEASUREMENT, offset: offset });
-    }
   };
 
   render() {
@@ -88,8 +78,7 @@ export default class App extends Component {
           <IotChartSpan
             offset={this.state.offset}
             minTime={this.state.minTime}
-            onSpanPrev={this.handleSpanPrev}
-            onSpanNext={this.handleSpanNext}
+            onChange={this.handleSpanChange}
           />
           <IotChart intervalIdx={this.state.intervalIdx} sqlResponse={this.state.sqlResponse} />
         </div>
