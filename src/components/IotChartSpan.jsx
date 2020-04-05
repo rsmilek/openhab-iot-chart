@@ -10,6 +10,7 @@ export default class IotChartSpan extends Component {
     console.log("IotChartSpan", "render");
     return (
       <React.Fragment>
+        <span>{this.getSpanStr()}</span>
         <button
           className="btn btn-outline-primary btn-sm"
           onClick={this.handleSpanPrev}
@@ -17,7 +18,7 @@ export default class IotChartSpan extends Component {
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        <span>&nbsp;{this.props.offset}&nbsp;</span>
+        {/* <span>&nbsp;{this.props.offset}&nbsp;</span> */}
         <button
           className="btn btn-outline-primary btn-sm"
           onClick={this.handleSpanNext}
@@ -25,18 +26,34 @@ export default class IotChartSpan extends Component {
         >
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
-        <div>
-          <span>{this.props.minTime.format()}</span>
-        </div>
-        <div>
-          <span>{this.props.spanFrom.format()}</span>
-        </div>
-        <div>
-          <span>{this.props.spanTo.format()}</span>
-        </div>
       </React.Fragment>
     );
   }
+
+  getSpanStr = () => {
+    const { spanFrom, spanTo } = this.props;
+    const fromDay = spanFrom.day();
+    const fromMonth = spanFrom.month();
+    const fromYear = spanFrom.year();
+    const toDay = spanTo.day();
+    const toMonth = spanTo.month();
+    const toYear = spanTo.year();
+    if (fromDay === toDay && fromMonth === toMonth) {
+      return spanFrom.format("ddd, MMMM Do YYYY");
+    } else {
+      if (fromYear === toYear) {
+        return (
+          spanFrom.format("ddd, MMMM Do") +
+          " - " +
+          spanTo.format("ddd, MMMM Do") +
+          " " +
+          spanTo.format("YYYY")
+        );
+      } else {
+        return spanFrom.format("ddd, MMMM Do YYYY") + " - " + spanTo.format("ddd, MMMM Do YYYY");
+      }
+    }
+  };
 
   // Check if offset of chart's time min/max (span) for interval should be moved backward
   checkMovePrev = () => {
