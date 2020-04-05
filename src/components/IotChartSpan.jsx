@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-// const moment = require("moment");
+const chartSpan = require("../chartSpan");
+const moment = require("moment");
 
 export default class IotChartSpan extends Component {
   render() {
@@ -24,7 +25,15 @@ export default class IotChartSpan extends Component {
         >
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
-        <span>{this.props.minTime.format()}</span>
+        <div>
+          <span>{this.props.minTime.format()}</span>
+        </div>
+        <div>
+          <span>{this.props.spanFrom.format()}</span>
+        </div>
+        <div>
+          <span>{this.props.spanTo.format()}</span>
+        </div>
       </React.Fragment>
     );
   }
@@ -32,13 +41,21 @@ export default class IotChartSpan extends Component {
   handleSpanPrev = () => {
     let offset = this.props.offset;
     offset--;
-    this.props.onChange(offset); // Fire event to parent component to change state
+    const { intervalIdx, spanFrom, spanTo, minTime } = this.props;
+    // Check if offset of chart's time min/max (span) for interval should be moved backward
+    const span = { aFrom: moment(spanFrom), aTo: moment(spanTo) };
+    const spanNew = chartSpan.move(span, intervalIdx, -1);
+    const diffHours = minTime.diff(spanNew.aTo, "hours");
+    if (diffHours <= 0) {
+      this.props.onChange(offset); // Fire event to parent component to change state
+    }
   };
 
   handleSpanNext = () => {
     let offset = this.props.offset;
-    if (offset < 0) {
-      offset++;
+    offset++;
+    // Check if offset of chart's time min/max (span) for interval should be moved forward
+    if (offset <= 0) {
       this.props.onChange(offset); // Fire event to parent component to change state
     }
   };

@@ -17,6 +17,10 @@ export const INTERVAL_IDX_WEEK = 1;
 // Interval index - Month
 export const INTERVAL_IDX_MONTH = 2;
 
+// Init offset of chart's time min/max (span) for interval
+// NOTE: Valid values <= 0
+export const OFFSET_DEFAULT = 0;
+
 export const XAXES_DAY = {
   type: "time",
   time: {

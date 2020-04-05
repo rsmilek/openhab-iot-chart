@@ -24,9 +24,11 @@ const init = intervalIdx => {
 // Move chart's min/max (span) about given offset
 const move = (span, intervalIdx, offset) => {
   const offsetDays = offset * SPAN_OFFSET[intervalIdx];
-  span.aFrom.add(offsetDays, "d");
-  span.aTo.add(offsetDays, "d");
-  return span;
+  // WARNING: Don't use to object copy 'const res = { ...span };'
+  const result = { aFrom: moment(span.aFrom), aTo: moment(span.aTo) };
+  result.aFrom.add(offsetDays, "d");
+  result.aTo.add(offsetDays, "d");
+  return result;
 };
 
 exports.init = init;

@@ -9,7 +9,8 @@ import {
   STATUS_GET_MEASUREMENT_MIN_TIME,
   STATUS_VALID,
   INTERVALS,
-  INTERVAL_IDX_DAY
+  INTERVAL_IDX_DAY,
+  OFFSET_DEFAULT
 } from "./share";
 
 const moment = require("moment");
@@ -23,9 +24,11 @@ export default class App extends Component {
     this.state = {
       status: STATUS_INVALID, // Status of app state machine
       minTime: moment(), // Minimal time value of measurement
+      spanFrom: moment(),
+      spanTo: moment(),
       intervalIdx: INTERVAL_IDX_DAY, // Index of interval - Day/Week/Month
       sqlResponse: [], // SQL response fetched from Influx database for measurement
-      offset: 0 // Offset of chart's time min/max (span)  for interval
+      offset: OFFSET_DEFAULT // Offset of chart's time min/max (span) for interval
     };
   }
 
@@ -42,7 +45,12 @@ export default class App extends Component {
         span = chartSpan.move(span, this.state.intervalIdx, this.state.offset); // Move chart's min/max (span) about given offset
         // Query SQL data with given span from measurement for corresponding interval
         database.fetchMeasurement(this.state.intervalIdx, span).then(response => {
-          this.setState({ status: STATUS_GET_MEASUREMENT_MIN_TIME, sqlResponse: response });
+          this.setState({
+            status: STATUS_GET_MEASUREMENT_MIN_TIME,
+            spanFrom: span.aFrom,
+            spanTo: span.aTo,
+            sqlResponse: response
+          });
         });
         break;
       case STATUS_GET_MEASUREMENT_MIN_TIME:
@@ -76,8 +84,11 @@ export default class App extends Component {
             onChange={this.handleIntervalChange}
           />
           <IotChartSpan
+            intervalIdx={this.state.intervalIdx}
             offset={this.state.offset}
             minTime={this.state.minTime}
+            spanFrom={this.state.spanFrom}
+            spanTo={this.state.spanTo}
             onChange={this.handleSpanChange}
           />
           <IotChart intervalIdx={this.state.intervalIdx} sqlResponse={this.state.sqlResponse} />
