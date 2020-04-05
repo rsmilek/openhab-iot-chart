@@ -13,7 +13,7 @@ export default class IotChartSpan extends Component {
         <button
           className="btn btn-outline-primary btn-sm"
           onClick={this.handleSpanPrev}
-          //disabled
+          disabled={!this.checkMovePrev().canMove}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
@@ -21,7 +21,7 @@ export default class IotChartSpan extends Component {
         <button
           className="btn btn-outline-primary btn-sm"
           onClick={this.handleSpanNext}
-          // disabled
+          disabled={!this.checkMoveNext().canMove}
         >
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
@@ -38,25 +38,33 @@ export default class IotChartSpan extends Component {
     );
   }
 
-  handleSpanPrev = () => {
-    let offset = this.props.offset;
-    offset--;
-    const { intervalIdx, spanFrom, spanTo, minTime } = this.props;
-    // Check if offset of chart's time min/max (span) for interval should be moved backward
+  // Check if offset of chart's time min/max (span) for interval should be moved backward
+  checkMovePrev = () => {
+    const { intervalIdx, offset, spanFrom, spanTo, minTime } = this.props;
+    const result = { canMove: false, offset: offset };
+    result.offset--;
     const span = { aFrom: moment(spanFrom), aTo: moment(spanTo) };
     const spanNew = chartSpan.move(span, intervalIdx, -1);
     const diffHours = minTime.diff(spanNew.aTo, "hours");
-    if (diffHours <= 0) {
-      this.props.onChange(offset); // Fire event to parent component to change state
-    }
+    result.canMove = diffHours <= 0;
+    return result;
+  };
+
+  handleSpanPrev = () => {
+    const check = this.checkMovePrev();
+    if (check.canMove) this.props.onChange(check.offset); // Fire event to parent component to change state
+  };
+
+  // Check if offset of chart's time min/max (span) for interval should be moved forward
+  checkMoveNext = () => {
+    const result = { canMove: false, offset: this.props.offset };
+    result.offset++;
+    result.canMove = result.offset <= 0;
+    return result;
   };
 
   handleSpanNext = () => {
-    let offset = this.props.offset;
-    offset++;
-    // Check if offset of chart's time min/max (span) for interval should be moved forward
-    if (offset <= 0) {
-      this.props.onChange(offset); // Fire event to parent component to change state
-    }
+    const check = this.checkMoveNext();
+    if (check.canMove) this.props.onChange(check.offset); // Fire event to parent component to change state
   };
 }
