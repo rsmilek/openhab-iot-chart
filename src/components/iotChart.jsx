@@ -25,7 +25,7 @@ export default class IotChart extends Component {
       yAxis: []
     },
     title: {
-      display: true,
+      display: false,
       text: "Temperature",
       position: "top",
       fontSize: 16
@@ -91,12 +91,10 @@ export default class IotChart extends Component {
   render() {
     console.log("Chart", "render", "intervalIdx", this.props.intervalIdx);
     return (
-      <React.Fragment>
-        <div>
-          {/* Adding component reference to chart's canvas */}
-          <canvas ref={this.chartRef} />
-        </div>
-      </React.Fragment>
+      <div className="container">
+        {/* Adding component reference to chart's canvas */}
+        <canvas ref={this.chartRef} />
+      </div>
     );
   }
 }

@@ -4,23 +4,19 @@ import React, { Component } from "react";
 export default class Interval extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className="container">
         <nav aria-label="Interval pagination">
           <ul className="pagination justify-content-center m-2">
             {this.props.intervals.map(i => (
               <li className={this.getPageItemClasses(i)} key={i}>
-                <a
-                  className="page-link"
-                  href="#"
-                  onClick={event => this.handleInterval(i, event)}
-                >
+                <a className="page-link" href="#" onClick={event => this.handleInterval(i, event)}>
                   {i}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
-      </React.Fragment>
+      </div>
     );
   }
 
