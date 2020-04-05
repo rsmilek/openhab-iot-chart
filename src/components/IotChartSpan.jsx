@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-const chartSpan = require("../chartSpan");
+const util = require("util");
 const moment = require("moment");
+const chartSpan = require("../chartSpan");
 
 export default class IotChartSpan extends Component {
   render() {
@@ -42,11 +43,10 @@ export default class IotChartSpan extends Component {
       return spanFrom.format("ddd, MMMM Do YYYY");
     } else {
       if (fromYear === toYear) {
-        return (
-          spanFrom.format("ddd, MMMM Do") +
-          " - " +
-          spanTo.format("ddd, MMMM Do") +
-          " " +
+        return util.format(
+          "%s - %s %s",
+          spanFrom.format("ddd, MMMM Do"),
+          spanTo.format("ddd, MMMM Do"),
           spanTo.format("YYYY")
         );
       } else {
