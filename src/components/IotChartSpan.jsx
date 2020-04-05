@@ -13,7 +13,7 @@ export default class IotChartSpan extends Component {
       <React.Fragment>
         <span>{this.getSpanStr()}</span>
         <button
-          className="btn btn-outline-primary btn-sm"
+          className="btn btn-link btn-outline-primary m-1"
           onClick={this.handleSpanPrev}
           disabled={!this.checkMovePrev().canMove}
         >
@@ -21,7 +21,7 @@ export default class IotChartSpan extends Component {
         </button>
         {/* <span>&nbsp;{this.props.offset}&nbsp;</span> */}
         <button
-          className="btn btn-outline-primary btn-sm"
+          className="btn btn-link btn-outline-primary"
           onClick={this.handleSpanNext}
           disabled={!this.checkMoveNext().canMove}
         >
