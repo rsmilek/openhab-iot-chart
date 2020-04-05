@@ -41,18 +41,15 @@ export default class IotChartSpan extends Component {
     const toYear = spanTo.year();
     if (fromDay === toDay && fromMonth === toMonth) {
       return spanFrom.format("ddd, MMMM Do YYYY");
-    } else {
-      if (fromYear === toYear) {
-        return util.format(
-          "%s - %s %s",
-          spanFrom.format("ddd, MMMM Do"),
-          spanTo.format("ddd, MMMM Do"),
-          spanTo.format("YYYY")
-        );
-      } else {
-        return spanFrom.format("ddd, MMMM Do YYYY") + " - " + spanTo.format("ddd, MMMM Do YYYY");
-      }
-    }
+    } else if (fromYear === toYear) {
+      return util.format(
+        "%s - %s %s",
+        spanFrom.format("ddd, MMMM Do"),
+        spanTo.format("ddd, MMMM Do"),
+        spanTo.format("YYYY")
+      );
+    } else
+      return util.format("%s - %s", spanFrom.format("ddd, MMMM Do YYYY"), spanTo.format("ddd, MMMM Do YYYY"));
   };
 
   // Check if offset of chart's time min/max (span) for interval should be moved backward
