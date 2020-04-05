@@ -48,7 +48,7 @@ export default class IotChartSpan extends Component {
     const toDay = spanTo.day();
     const toMonth = spanTo.month();
     const toYear = spanTo.year();
-    if (fromDay === toDay && fromMonth === toMonth) {
+    if (fromDay === toDay && fromMonth === toMonth && fromYear === toYear) {
       return spanFrom.format("ddd, MMMM Do YYYY");
     } else if (fromYear === toYear) {
       return util.format(
