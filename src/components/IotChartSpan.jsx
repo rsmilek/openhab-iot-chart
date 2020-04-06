@@ -13,7 +13,7 @@ export default class IotChartSpan extends Component {
       <div className="container">
         <div>
           <div className="float-left ml-4">
-            <span className="align-baseline h4  mr-4">
+            <span className="align-baseline h5 mr-4">
               <strong>Temperature</strong>
             </span>
           </div>
