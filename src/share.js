@@ -25,7 +25,7 @@ export const XAXES_DAY = {
   type: "time",
   time: {
     unit: "hour",
-    stepSize: 2,
+    stepSize: 4,
     displayFormats: {
       hour: "HH:mm"
     }
