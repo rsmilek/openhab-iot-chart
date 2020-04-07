@@ -54,7 +54,7 @@ export default class App extends Component {
         });
         break;
       case STATUS_GET_MEASUREMENT_MIN_TIME:
-        database.getMeasurementMinTime().then(response => {
+        database.getMeasurementMinTime(this.state.intervalIdx).then(response => {
           const minTime = moment(response);
           this.setState({ status: STATUS_VALID, minTime: minTime });
         });

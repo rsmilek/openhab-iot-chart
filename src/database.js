@@ -1,4 +1,3 @@
-const share = require("./share");
 const Influx = require("influx");
 const util = require("util");
 
@@ -38,9 +37,10 @@ const fetchMeasurement = (intervalIdx, span) => {
     .catch(error => console.log("database", "fetchMeasurement", error));
 };
 
-const getMeasurementMinTime = () => {
+// Query measurement for date-time of first value for given measurement
+const getMeasurementMinTime = intervalIdx => {
   return influx
-    .query("SELECT first(Value) FROM " + INFLUX_MEASUREMENTS[share.INTERVAL_IDX_DAY])
+    .query("SELECT first(Value) FROM " + INFLUX_MEASUREMENTS[intervalIdx])
     .then(response => {
       const minTime = response[0].time;
       console.log("database", "getMeasurementMinTime", minTime);
