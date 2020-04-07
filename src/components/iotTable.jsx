@@ -13,12 +13,12 @@ export default class IotTable extends Component {
     else {
       return (
         <div className="container">
-          <table className="table table-borderless">
+          <table className="table table-borderless mt-4">
             <thead>
               <tr>
                 <th style={{ width: "10%" }}></th>
                 <th style={{ width: "80%" }}>
-                  <table className="table table-bordered table-sm text-sm-left mt-4">
+                  <table className="table table-bordered table-sm text-sm-left">
                     <thead className="thead-light">
                       <tr>
                         <th scope="col" style={{ width: "40%" }}></th>
