@@ -25,7 +25,7 @@ export default class IotTable extends Component {
     else {
       return (
         <div className="container">
-          <table className="table table-bordered table-hover text-sm-left mt-5">
+          <table className="table table-bordered table-sm text-sm-left mt-4">
             <thead className="thead-light">
               <tr>
                 <th scope="col"></th>
