@@ -4,8 +4,10 @@ export const STATUS_INVALID = -1;
 export const STATUS_FETCH_MEASUREMENT = 0;
 // App status - get min time of measurement from Influx DB
 export const STATUS_GET_MEASUREMENT_MIN_TIME = 1;
+// App status - get min time of measurement from Influx DB
+export const STATUS_GET_MEASUREMENT_AGGREGATES = 2;
 // App status - is running
-export const STATUS_VALID = 2;
+export const STATUS_VALID = 3;
 
 // Defines array interval names
 export const INTERVALS = ["Day", "Week", "Month"];

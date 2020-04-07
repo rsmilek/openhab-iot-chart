@@ -49,5 +49,22 @@ const getMeasurementMinTime = intervalIdx => {
     .catch(error => console.log("database", "fetchMeasurement", error));
 };
 
+const fetchMeasurementAggregates = (intervalIdx, span) => {
+  const sqlQuery = util.format(
+    "SELECT MIN(Value) AS min, MAX(Value) AS max, MEAN(Value) AS avg FROM %s WHERE time >= '%s' AND time <= '%s'",
+    INFLUX_MEASUREMENTS[intervalIdx],
+    span.aFrom.format(),
+    span.aTo.format()
+  );
+  return influx
+    .query(sqlQuery)
+    .then(response => {
+      console.log("database", "fetchMeasurementAggregates", "response", response);
+      return response;
+    })
+    .catch(error => console.log("database", "fetchMeasurementAggregates", error));
+};
+
 exports.fetchMeasurement = fetchMeasurement;
 exports.getMeasurementMinTime = getMeasurementMinTime;
+exports.fetchMeasurementAggregates = fetchMeasurementAggregates;

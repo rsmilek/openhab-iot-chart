@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Interval from "./components/interval";
-import IotChartSpan from "./components/IotChartSpan";
+import IotChartSpan from "./components/iotChartSpan";
 import IotChart from "./components/iotChart";
+import IotTable from "./components/iotTable";
 import "./App.css";
 import {
   STATUS_INVALID,
   STATUS_FETCH_MEASUREMENT,
   STATUS_GET_MEASUREMENT_MIN_TIME,
+  STATUS_GET_MEASUREMENT_AGGREGATES,
   STATUS_VALID,
   INTERVALS,
   INTERVAL_IDX_DAY,
@@ -28,7 +30,8 @@ export default class App extends Component {
       spanTo: moment(),
       intervalIdx: INTERVAL_IDX_DAY, // Index of interval - Day/Week/Month
       sqlResponse: [], // SQL response fetched from Influx database for measurement
-      offset: OFFSET_DEFAULT // Offset of chart's time min/max (span) for interval
+      offset: OFFSET_DEFAULT, // Offset of chart's time min/max (span) for interval
+      sqlAggregates: []
     };
   }
 
@@ -56,8 +59,18 @@ export default class App extends Component {
       case STATUS_GET_MEASUREMENT_MIN_TIME:
         database.getMeasurementMinTime(this.state.intervalIdx).then(response => {
           const minTime = moment(response);
-          this.setState({ status: STATUS_VALID, minTime: minTime });
+          this.setState({ status: STATUS_GET_MEASUREMENT_AGGREGATES, minTime: minTime });
         });
+        break;
+      case STATUS_GET_MEASUREMENT_AGGREGATES:
+        database
+          .fetchMeasurementAggregates(this.state.intervalIdx, {
+            aFrom: this.state.spanFrom,
+            aTo: this.state.spanTo
+          })
+          .then(response => {
+            this.setState({ status: STATUS_VALID, sqlAggregates: response });
+          });
         break;
       default:
         break;
@@ -92,6 +105,7 @@ export default class App extends Component {
             onChange={this.handleSpanChange}
           />
           <IotChart intervalIdx={this.state.intervalIdx} sqlResponse={this.state.sqlResponse} />
+          <IotTable sqlAggregates={this.state.sqlAggregates} />
         </div>
       );
     }
