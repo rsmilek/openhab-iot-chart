@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import temperature from "../temperature.png";
 
 const util = require("util");
 const moment = require("moment");
@@ -13,7 +14,8 @@ export default class IotChartSpan extends Component {
       <div className="container">
         <div>
           <div className="float-left ml-4">
-            <span className="align-baseline h5 mr-4">
+            <img className="align-middle" src={temperature} alt="temperature" />
+            <span className="align-baseline h5 ml-2 mr-4">
               <strong>Temperature</strong>
             </span>
           </div>
