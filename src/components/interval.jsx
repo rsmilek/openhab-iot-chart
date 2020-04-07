@@ -6,7 +6,7 @@ export default class Interval extends Component {
     return (
       <div className="container">
         <nav aria-label="Interval pagination">
-          <ul className="pagination justify-content-center m-2">
+          <ul className="pagination justify-content-center mt-3 mb-4">
             {this.props.intervals.map(i => (
               <li className={this.getPageItemClasses(i)} key={i}>
                 <a className="page-link" href="#" onClick={event => this.handleInterval(i, event)}>

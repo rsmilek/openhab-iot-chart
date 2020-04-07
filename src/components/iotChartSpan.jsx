@@ -13,24 +13,23 @@ export default class IotChartSpan extends Component {
     return (
       <div className="container">
         <div>
-          <div className="float-left ml-4">
-            <img className="align-middle" src={temperature} alt="temperature" />
-            <span className="align-baseline h5 ml-2 mr-4">
+          <div className="float-left align-baseline ml-4">
+            <img className="" src={temperature} alt="temperature" />
+            <span className=" h5 ml-2 mr-4">
               <strong>Temperature</strong>
             </span>
           </div>
-          <div className="float-right mr-4">
-            <span className="align-baseline mr-2">{this.getSpanStr()}</span>
+          <div className="float-right align-baseline mr-4">
+            <span className=" mr-2">{this.getSpanStr()}</span>
             <button
-              className="btn btn-link btn-outline-primary btn-sm align-baseline mr-1"
+              className="btn btn-link btn-outline-primary btn-sm mr-1"
               onClick={this.handleSpanPrev}
               disabled={!this.checkMovePrev().canMove}
             >
               <FontAwesomeIcon icon={faAngleLeft} />
             </button>
-            {/* <span>&nbsp;{this.props.offset}&nbsp;</span> */}
             <button
-              className="btn btn-link btn-outline-primary align-baseline btn-sm"
+              className="btn btn-link btn-outline-primary btn-sm"
               onClick={this.handleSpanNext}
               disabled={!this.checkMoveNext().canMove}
             >
