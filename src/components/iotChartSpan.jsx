@@ -20,7 +20,7 @@ export default class IotChartSpan extends Component {
             </span>
           </div>
           <div className="float-right mr-4">
-            <span className="align-baseline mr-3">{this.getSpanStr()}</span>
+            <span className="align-baseline mr-2">{this.getSpanStr()}</span>
             <button
               className="btn btn-link btn-outline-primary btn-sm align-baseline mr-1"
               onClick={this.handleSpanPrev}
