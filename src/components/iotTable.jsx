@@ -13,11 +13,18 @@ export default class IotTable extends Component {
     else {
       return (
         <div className="container">
-          <table className="table table-borderless mt-4">
+          <table className="table table-borderless">
             <thead>
               <tr>
                 <th style={{ width: "10%" }}></th>
-                <th style={{ width: "80%" }}>
+                <th style={{ width: "80%" }}></th>
+                <th style={{ width: "10%" }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
                   <table className="table table-bordered table-sm text-sm-left">
                     <thead className="thead-light">
                       <tr>
@@ -42,10 +49,10 @@ export default class IotTable extends Component {
                       </tr>
                     </tbody>
                   </table>
-                </th>
-                <th style={{ width: "10%" }}></th>
+                </td>
+                <td></td>
               </tr>
-            </thead>
+            </tbody>
           </table>
         </div>
       );
