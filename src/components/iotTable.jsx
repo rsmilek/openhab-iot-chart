@@ -6,18 +6,6 @@ export default class IotTable extends Component {
     super(props);
   }
 
-  //   static getDerivedStateFromProps(props, state) {
-  //       return { temperatureData: props.sqlResponse };
-  //   }
-
-  componentDidMount() {
-    // console.log("IotTable", "componentDidMount");
-  }
-
-  componentDidUpdate() {
-    // console.log("IotTable", "componentDidUpdate");
-  }
-
   render() {
     console.log("IotTable", "render", "intervalIdx", this.props.intervalIdx);
     const { sqlAggregates } = this.props;
@@ -25,29 +13,39 @@ export default class IotTable extends Component {
     else {
       return (
         <div className="container">
-          <table className="table table-bordered table-sm text-sm-left mt-4">
-            <thead className="thead-light">
+          <table className="table table-borderless">
+            <thead>
               <tr>
-                <th scope="col"></th>
-                <th className="text-right" scope="col">
-                  Avg
+                <th style={{ width: "10%" }}></th>
+                <th style={{ width: "80%" }}>
+                  <table className="table table-bordered table-sm text-sm-left mt-4">
+                    <thead className="thead-light">
+                      <tr>
+                        <th scope="col" style={{ width: "40%" }}></th>
+                        <th className="text-right" scope="col" style={{ width: "20%" }}>
+                          Avg
+                        </th>
+                        <th className="text-right" scope="col" style={{ width: "20%" }}>
+                          Min
+                        </th>
+                        <th className="text-right" scope="col" style={{ width: "20%" }}>
+                          Max
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Outdoor</th>
+                        <td className="text-right">{sqlAggregates[0].avg.toFixed(2)}</td>
+                        <td className="text-right">{sqlAggregates[0].min.toFixed(2)}</td>
+                        <td className="text-right">{sqlAggregates[0].max.toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </th>
-                <th className="text-right" scope="col">
-                  Min
-                </th>
-                <th className="text-right" scope="col">
-                  Max
-                </th>
+                <th style={{ width: "10%" }}></th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Outdoor</th>
-                <td className="text-right">{sqlAggregates[0].avg.toFixed(2)}</td>
-                <td className="text-right">{sqlAggregates[0].min.toFixed(2)}</td>
-                <td className="text-right">{sqlAggregates[0].max.toFixed(2)}</td>
-              </tr>
-            </tbody>
           </table>
         </div>
       );
