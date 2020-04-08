@@ -8,8 +8,9 @@ export default class IotTable extends Component {
 
   render() {
     console.log("IotTable", "render", "intervalIdx", this.props.intervalIdx);
-    const { sqlAggregates } = this.props;
-    if (sqlAggregates.length <= 0) return null;
+    const [sqlAggregate] = this.props.sqlAggregates; // Destruction of first element of array
+    // Undefined value of 'sqlAggregate' evaluates false
+    if (!sqlAggregate) return null;
     else {
       return (
         <div className="container">
@@ -43,9 +44,9 @@ export default class IotTable extends Component {
                     <tbody>
                       <tr>
                         <th scope="row">Outdoor</th>
-                        <td className="text-right">{sqlAggregates[0].avg.toFixed(2)}</td>
-                        <td className="text-right">{sqlAggregates[0].min.toFixed(2)}</td>
-                        <td className="text-right">{sqlAggregates[0].max.toFixed(2)}</td>
+                        <td className="text-right">{sqlAggregate.avg.toFixed(2)}</td>
+                        <td className="text-right">{sqlAggregate.min.toFixed(2)}</td>
+                        <td className="text-right">{sqlAggregate.max.toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
