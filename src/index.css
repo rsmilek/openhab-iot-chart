@@ -11,5 +11,6 @@ code {
 }
 
 html {
-  font-size: calc(0.8em + 0.3vw);
+  /* font-size: calc(0.8em + 0.3vw); */
+  font-size: calc(0.6em + 0.3vw);
 }
