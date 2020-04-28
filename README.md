@@ -1,8 +1,8 @@
 # DESCRIPTION
 
-This project implements simple IOT chart in React.
+Hobby project to visualize sample data from sensors with reach possibilities to analyze. Home automation system OpenHab is used to collect data into Influx time series database. Web React app for its presentation should be integered into OpenHab's UI or used as standalone.
 
-![IotCharts](screenshots/iotchart.png)
+![openhabIotChart](screenshots/openhabIotChart.png)
 
 ### 'npm install'
 
