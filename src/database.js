@@ -3,10 +3,11 @@ const util = require("util");
 
 // Influx DB credentials
 const INFLUXDB = {
-  host: "192.168.0.10",
+  // host: process.env.NODE_ENV === "production" ? "localhost" : "192.168.0.11", // localhost isn't working
+  host: "192.168.0.11",
   userName: "admin",
   password: "Kolovrat73",
-  database: "openweather_db"
+  database: "openweather_db",
 };
 
 // Influx measurements for each interval
@@ -17,7 +18,7 @@ const influx = new Influx.InfluxDB({
   host: INFLUXDB.host,
   username: INFLUXDB.userName,
   password: INFLUXDB.password,
-  database: INFLUXDB.database
+  database: INFLUXDB.database,
 });
 
 // Query SQL data with given span from measurement for corresponding interval
@@ -30,23 +31,23 @@ const fetchMeasurement = (intervalIdx, span) => {
   );
   return influx
     .query(sqlQuery)
-    .then(response => {
+    .then((response) => {
       console.log("database", "fetchMeasurement", "response", response);
       return response;
     })
-    .catch(error => console.log("database", "fetchMeasurement", error));
+    .catch((error) => console.log("database", "fetchMeasurement", error));
 };
 
 // Query measurement for date-time of first value for given measurement
-const getMeasurementMinTime = intervalIdx => {
+const getMeasurementMinTime = (intervalIdx) => {
   return influx
     .query("SELECT first(Value) FROM " + INFLUX_MEASUREMENTS[intervalIdx])
-    .then(response => {
+    .then((response) => {
       const minTime = response[0].time;
       console.log("database", "getMeasurementMinTime", minTime);
       return minTime;
     })
-    .catch(error => console.log("database", "fetchMeasurement", error));
+    .catch((error) => console.log("database", "fetchMeasurement", error));
 };
 
 const fetchMeasurementAggregates = (intervalIdx, span) => {
@@ -58,11 +59,11 @@ const fetchMeasurementAggregates = (intervalIdx, span) => {
   );
   return influx
     .query(sqlQuery)
-    .then(response => {
+    .then((response) => {
       console.log("database", "fetchMeasurementAggregates", "response", response);
       return response;
     })
-    .catch(error => console.log("database", "fetchMeasurementAggregates", error));
+    .catch((error) => console.log("database", "fetchMeasurementAggregates", error));
 };
 
 exports.fetchMeasurement = fetchMeasurement;
