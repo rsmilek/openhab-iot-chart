@@ -3,7 +3,6 @@ const util = require("util");
 
 // Influx DB credentials
 const INFLUXDB = {
-  // host: process.env.NODE_ENV === "production" ? "localhost" : "192.168.0.11", // localhost isn't working
   host: "192.168.0.11",
   userName: "admin",
   password: "Kolovrat73",
