@@ -15,9 +15,7 @@ export default class IotChartSpan extends Component {
         <div className="row">
           <div className="col-md text-left ml-4">
             <img height="30px" src={imgTemperature} alt="Temperature" />
-            <span className="h5 mr-4">
-              <strong>Temperature</strong>
-            </span>
+            <span className="h5 font-weight-bold mr-4">Temperature</span>
           </div>
           <div className="col-md text-right mr-4">
             <span className="mr-2">{this.getSpanStr()}</span>
