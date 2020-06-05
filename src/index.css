@@ -30,7 +30,4 @@ html {
   html {
     font-size: calc(0.7em + 0.3vw);
   }
-  .container-iottable {
-    padding: 10px 0 0;
-  }
 }
