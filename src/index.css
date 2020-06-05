@@ -13,3 +13,24 @@ code {
 html {
   font-size: calc(0.8em + 0.3vw);
 }
+
+.container-iottable {
+  padding: 20px 20vw 0;
+}
+
+/* Small devices (landscape phones, 576px) */
+@media (max-width: 576px) {
+  html {
+    font-size: calc(0.7em + 0.3vw);
+  }
+  .container-iottable {
+    padding: 10px 0 0;
+  }
+}
+
+/* Medium devices (tablets, 768px) */
+@media (max-width: 768px) {
+  .container-iottable {
+    padding: 10px 5vw 0;
+  }
+}
