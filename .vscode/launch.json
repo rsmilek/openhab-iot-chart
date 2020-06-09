@@ -1,41 +1,40 @@
-// Use IntelliSense to learn about possible attributes.
-// Hover to view descriptions of existing attributes.
-// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
+      // Prepare:
+      // 1. /usr/bin/google-chrome-stable --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
+      // 2. npm start
+      // 3. Navigate to url = http://localhost:3000/
+      // 4. Start debugging by F5
+      // 5. Finish debugging by disconnect
+      "name": "Attach to Chrome, with sourcemaps",
       "type": "chrome",
-      "request": "launch",
-      "name": "Launch Chrome - WSL",
+      "request": "attach",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "trace": true,
-      // "trace": "verbose", // Writes log directly to DEBUG CONSOLE
-      // "sourceMaps": true,
+      "port": 9222,
+      "sourceMaps": true,
+      "webRoot": "${workspaceRoot}/src",
       "sourceMapPathOverrides": {
-        // "/mnt/c/Projects/JavaScript/r-iot-chart/*": "${workspaceFolder}/*"
-        "${workspaceFolder}/*": "${workspaceFolder}/*"
+        "webpack:///src/*": "${webRoot}/*"
       }
     },
     {
-      // Prepare:
-      // 1. "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir=%temp%\chrome-debug
-      // 2. Navigate to url = http://localhost:3000/
-      // 3. Start debugging by F5
-      // 4. Finish debugging by close Chrome
+      // Not working on WSL2
+      "name": "Launch Chrome against localhost",
       "type": "chrome",
-      "request": "attach",
-      "name": "Attach to Chrome - WSL",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}",
-      "url": "http://localhost:3000/",
-      "trace": true,
-      "sourceMaps": true,
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src",
       "sourceMapPathOverrides": {
-        // "/mnt/c/Projects/JavaScript/r-iot-chart/*": "${workspaceFolder}/*"
-        "${workspaceFolder}/*": "${workspaceFolder}/*"
-      }
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "runtimeExecutable": "/usr/bin/google-chrome-stable",
+      "runtimeArgs": ["--new-window", "--remote-debugging-port=9222", "--disable-background-networking"],
+      "userDataDir": true
     }
   ]
 }
