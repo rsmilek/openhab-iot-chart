@@ -6,11 +6,12 @@
   "configurations": [
     {
       // Prepare:
-      // 1. /usr/bin/google-chrome-stable --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
+      // 1. /usr/bin/google-chrome-stable --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug &
       // 2. npm start
       // 3. Navigate to url = http://localhost:3000/
       // 4. Start debugging by F5
-      // 5. Finish debugging by disconnect
+      // 5. Refresh page in chrome
+      // 6. Finish debugging by disconnect
       "name": "Attach to Chrome, with sourcemaps",
       "type": "chrome",
       "request": "attach",
