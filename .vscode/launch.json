@@ -4,13 +4,28 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    // Prepare:
+    // 1. npm start
+    // 2. Start debugging by F5
+    // 3. Refresh page in chrome to start debugging
+    // 4. Finish debugging by disconnect
+    {
+      "name": "Launch Chrome against localhost",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    },
     {
       // Prepare:
       // 1. /usr/bin/google-chrome-stable --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug &
       // 2. npm start
       // 3. Navigate to url = http://localhost:3000/
       // 4. Start debugging by F5
-      // 5. Refresh page in chrome
+      // 5. Refresh page in chrome to start debugging
       // 6. Finish debugging by disconnect
       "name": "Attach to Chrome, with sourcemaps",
       "type": "chrome",
@@ -22,20 +37,6 @@
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
       }
-    },
-    {
-      // Not working on WSL2
-      "name": "Launch Chrome against localhost",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceRoot}/src",
-      "sourceMapPathOverrides": {
-        "webpack:///src/*": "${webRoot}/*"
-      },
-      "runtimeExecutable": "/usr/bin/google-chrome-stable",
-      "runtimeArgs": ["--new-window", "--remote-debugging-port=9222", "--disable-background-networking"],
-      "userDataDir": true
     }
   ]
 }
